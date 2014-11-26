@@ -52,6 +52,7 @@ namespace ProductCategories.Controllers
             newProduct.CategoryId = product.SelectedCategoryId;
             var dbContext = new ProductContext();
             dbContext.Products.Add(newProduct);
+            
             dbContext.SaveChanges();
             return RedirectToAction("Index");
         }
