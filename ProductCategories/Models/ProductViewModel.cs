@@ -17,5 +17,6 @@ namespace ProductCategories.Models
         public int SelectedCategoryId { get; set; }
 
         public List<SelectListItem> Categories { get; set; }
+
     }
 }

@@ -10,7 +10,7 @@ namespace ProductCategories.Controllers
     public class ProductController : Controller
     {
         // GET: Product
-        public ActionResult Index(string cat)
+        public ActionResult Index(string cat, string tag)
         {
             var context = new ProductContext();
             IQueryable<Product> allProducts = context.Products;
@@ -22,7 +22,16 @@ namespace ProductCategories.Controllers
                 
                 allProducts = context.Products.Where(x => x.Category.Name == cat);
             }
-            return View(allProducts);
+
+            if(!string.IsNullOrWhiteSpace(tag))
+            {
+                allProducts = allProducts.Where(product => product.Tags.Any(t => t.Name == tag));
+            }
+
+            var model = new ProductIndexViewModel();
+            model.Products = allProducts;
+            model.Tags = context.Tags;
+            return View(model);
         }
 
         public ActionResult Create()
