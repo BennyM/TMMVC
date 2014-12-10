@@ -7,9 +7,11 @@ using System.Web.Mvc;
 
 namespace ProductCategories.Controllers
 {
+    [Authorize]
     public class ProductController : Controller
     {
         // GET: Product
+
         public ActionResult Index(string cat, string tag)
         {
             var context = new ProductContext();
@@ -34,8 +36,11 @@ namespace ProductCategories.Controllers
             return View(model);
         }
 
+       
         public ActionResult Create()
         {
+          
+
             var context = new ProductContext();
             var viewModel = new ProductViewModel();
             viewModel.Categories = new List<SelectListItem>();
@@ -52,6 +57,8 @@ namespace ProductCategories.Controllers
 
             return View(viewModel);
         }
+
+        
         [HttpPost]
         public ActionResult Create(ProductViewModel product)
         {
@@ -65,5 +72,28 @@ namespace ProductCategories.Controllers
             dbContext.SaveChanges();
             return RedirectToAction("Index");
         }
+    }
+
+    public class LanguageFilter
+        : ActionFilterAttribute
+    {
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        
+        {
+          var taal =  (string)filterContext.HttpContext.Session["taal"];
+            SetLanguage(taal);
+        }
+
+       
+            
+        protected void SetLanguage(string language)
+        {
+            if (!string.IsNullOrEmpty(language))
+            {
+                System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(language);
+                System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(language);
+            }
+        }
+        
     }
 }

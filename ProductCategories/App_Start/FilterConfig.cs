@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using ProductCategories.Controllers;
+using System.Web;
 using System.Web.Mvc;
 
 namespace ProductCategories
@@ -8,6 +9,7 @@ namespace ProductCategories
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
+            filters.Add(new LanguageFilter());
         }
     }
 }

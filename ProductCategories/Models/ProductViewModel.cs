@@ -13,7 +13,7 @@ namespace ProductCategories.Models
         [StringLength(50)]
         public string Name { get; set; }
 
-        [DisplayName("Category")]
+        [Display(ResourceType = typeof(LocalizedValues), Name = "CategoryName")]
         public int SelectedCategoryId { get; set; }
 
         public List<SelectListItem> Categories { get; set; }
